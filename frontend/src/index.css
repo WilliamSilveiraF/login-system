@@ -30,6 +30,13 @@ main > *:first-child {
   align-self: center;
 }
 
+/*=== Components ===*/
+.logo {
+  font-family: 'Titillium Web';
+  font-size: 5rem;
+  color: #4267B2;
+  font-weight: 700;
+}
 /*=== loginForms ===*/
 
 #loginForms > * {
@@ -42,6 +49,12 @@ main > *:first-child {
 #loginForms > p {
   color: #4267B2;
   font-size: 1.5rem;
+}
+#loginForms > h5 {
+  color: #4267B2;
+  line-height: 0;
+  font-weight: 400;
+  font-size: 1.25rem;
 }
 #loginForms > button {
   background: #4267B2;
@@ -64,16 +77,15 @@ main > *:first-child {
 /*=== registerForms ===*/
 #registerForms > * {
     line-height: 1rem;
-  }
-#registerForms > h1 {
-  font-size: 2rem;
-}
-#registerForms > h1 > span {
-  color: #4267B2;
 }
 #registerForms > button {
-
   background: #4267B2;
+}
+#registerForms > h5 {
+  color: #4267B2;
+  line-height: 0;
+  font-weight: 400;
+  font-size: 1.25rem;
 }
 #registerForms > h6 {
   font-weight: 400;
@@ -90,3 +102,11 @@ main > *:first-child {
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  html {
+    font-size: 90%;
+  }
+  main {
+    grid-template-columns: 300px;
+  }
+}
