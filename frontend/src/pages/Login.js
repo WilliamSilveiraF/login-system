@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TextField, Button } from "@mui/material"
+import { Link } from "react-router-dom";
 
 const LoginForms = styled.form`
   & > * {
@@ -40,7 +41,6 @@ const Login = () => {
       <p>Welcome back!</p>
       <TextField
         margin="normal"
-        required
         fullWidth
         id="email"
         label="Email Address"
@@ -50,7 +50,6 @@ const Login = () => {
       />
       <TextField
         margin="normal"
-        required
         fullWidth
         name="password"
         label="Password"
@@ -66,7 +65,7 @@ const Login = () => {
       >
         Sign In
       </Button>
-      <h6>Don't have an account? <a href="/register">Register</a></h6>
+      <h6>Don't have an account? <Link to="/register">Register</Link></h6>
     </LoginForms>
   );
 }
