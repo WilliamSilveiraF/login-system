@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { Button } from '@mui/material'
 import { useGlobalContext } from "../context";
 
 const Home = () => {
   const [toHome, setToHome] = useState(false)
-
+  
   const { 
    name, setName,
    email, setEmail 
@@ -35,6 +36,17 @@ const Home = () => {
      }
     )()
   })
+  const logout = async () => {
+    const response = await fetch('http://localhost:8080/api/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      credentials: 'include',
+    });
+    const content = await response.json()
+    if (content.message === 'success') {
+      setToHome(true)
+    }
+  }
   if (toHome) {
     return <Navigate to="/"/>
   }
@@ -43,6 +55,15 @@ const Home = () => {
     <h1>Home</h1>
     <h1>Name: { name }</h1>
     <h1>Email: { email }</h1>
+    <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3 }}
+        onClick={() => logout()}
+    >
+      Logout
+    </Button>
    </section>
   );
 }
