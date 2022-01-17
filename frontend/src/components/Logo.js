@@ -6,7 +6,6 @@ const H1 = styled.h1`
   font-size: 5rem;
   color: #4267B2;
   font-weight: 700;
-  
 `
 
 const Logo = () => {
