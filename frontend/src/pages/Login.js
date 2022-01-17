@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button } from "@mui/material"
 import { Link, Navigate } from "react-router-dom";
-import { useGlobalContext } from "../context";
 
 const Login = () => {
   const [toLogin, setToLogin] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [disclaimer, setDisclaimer] = useState('')
-  const { 
-    email, setEmail,
-    password, setPassword 
-  } = useGlobalContext()
-
-  useEffect(() => {
-    setToLogin(false)
-    setEmail('')
-    setPassword('')
-    setDisclaimer('')
-  }, [])
   
   const submit = async (e) => {
     e.preventDefault()
@@ -31,11 +21,7 @@ const Login = () => {
       })
     });
     const content = await response.json()
-    if (content.message === "success") {
-      setToLogin(true)
-    } else {
-      setDisclaimer(content.message)
-    }
+    content.message === "success" ? setToLogin(true) : setDisclaimer(content.message)
   }
   if (toLogin) {
     return <Navigate to="/home"/>

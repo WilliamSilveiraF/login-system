@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Button } from '@mui/material'
-import { useGlobalContext } from "../context";
 
 const Home = () => {
   const [toHome, setToHome] = useState(false)
-  
-  const { 
-   name, setName,
-   email, setEmail 
-  } = useGlobalContext()
-
-  useEffect(() => {
-    setToHome(false)
-    setName('')
-    setEmail('')
-  }, [])
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
 
   useEffect(() => {
     (
