@@ -1,42 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { TextField, Button } from "@mui/material"
 import { Link } from "react-router-dom";
 
-const LoginForms = styled.form`
-  & > * {
-    line-height: 1rem;
-  }
-  & > h1 {
-    color: #4267B2;
-    font-size: 2rem;
-  }
-  & > p {
-    color: #4267B2;
-    font-size: 1.5rem;
-  }
-  & > button {
-    background: #4267B2;
-  }
-  & > h6 {
-    font-weight: 400;
-    font-size: 1.05rem;
-    text-align: right;
-    & > a {
-      font-weight: 500;
-      text-decoration: none;
-      color: #4267B2;
-      &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-    }
-  }
-`
-
 const Login = () => {
   return (
-    <LoginForms>
+    <form id='loginForms'>
       <h1>Hi :D</h1>
       <p>Welcome back!</p>
       <TextField
@@ -58,6 +26,7 @@ const Login = () => {
         autoComplete="current-password"
       />
       <Button
+        id="signIn"
         type="submit"
         fullWidth
         variant="contained"
@@ -66,7 +35,7 @@ const Login = () => {
         Sign In
       </Button>
       <h6>Don't have an account? <Link to="/register">Register</Link></h6>
-    </LoginForms>
+    </form>
   );
 }
 
