@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material"
 import { Link, Navigate } from "react-router-dom";
 import { useGlobalContext } from "../context";
 
 const Register = () => {
+  const [toLogin, setToLogin] = useState(false)
+  useEffect(() => {
+    setToLogin(false)
+  }, [])
   const { 
     name, setName,
     email, setEmail,
     password, setPassword,
-    redirect, setRedirect
   } = useGlobalContext()
 
   const submit = async (e) => {
@@ -23,13 +26,12 @@ const Register = () => {
         password
       })
     })
-    setRedirect(true)
+    setToLogin(true)
   }
-
-  if (redirect) {
-    return <Navigate to="/"/>
+  
+  if (toLogin) {
+    return <Navigate to='/' />
   }
-
   return (
     <form id='registerForms' onSubmit={submit}>
       <h1>Welcome to <span>willbook</span></h1>

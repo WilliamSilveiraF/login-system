@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button } from "@mui/material"
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useGlobalContext } from "../context";
 
 const Login = () => {
+  const [toLogin, setToLogin] = useState(false)
+  const { 
+    email, setEmail,
+    password, setPassword 
+  } = useGlobalContext()
+
+  useEffect(() => {
+    setToLogin(false)
+    setEmail('')
+    setPassword('')
+  }, [])
+  
+  const submit = async (e) => {
+    e.preventDefault()
+
+    const response = await fetch('http://localhost:8080/api/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      credentials: 'include',
+      body: JSON.stringify({
+        email,
+        password
+      })
+    });
+    const content = await response.json()
+    if (content.message === "success") {
+      setToLogin(true)
+    } else {
+      window.alert(content.message)
+    }
+  }
+  if (toLogin) {
+    return <Navigate to="/home"/>
+  }
   return (
-    <form id='loginForms'>
+    <form id='loginForms' onSubmit={submit}>
       <h1>Hi :D</h1>
       <p>Welcome back!</p>
       <TextField
@@ -15,6 +50,7 @@ const Login = () => {
         name="email"
         autoComplete="email"
         autoFocus
+        onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
         margin="normal"
@@ -24,6 +60,7 @@ const Login = () => {
         type="password"
         id="password"
         autoComplete="current-password"
+        onChange={(e) => setPassword(e.target.value)}
       />
       <Button
         id="signIn"
