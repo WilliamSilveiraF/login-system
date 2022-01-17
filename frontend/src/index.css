@@ -43,6 +43,12 @@ main > *:first-child {
   color: #4267B2;
   font-size: 1.5rem;
 }
+#loginForms > h5 {
+  color: #4267B2;
+  line-height: 0;
+  font-weight: 400;
+  font-size: 1.25rem;
+}
 #loginForms > button {
   background: #4267B2;
 }

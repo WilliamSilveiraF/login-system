@@ -5,8 +5,10 @@ import { useGlobalContext } from "../context";
 
 const Register = () => {
   const [toLogin, setToLogin] = useState(false)
+  const [disclaimer, setDisclaimer] = useState('')
   useEffect(() => {
     setToLogin(false)
+    setDisclaimer('')
   }, [])
   const { 
     name, setName,
@@ -17,7 +19,7 @@ const Register = () => {
   const submit = async (e) => {
     e.preventDefault()
     
-    await fetch('http://localhost:8080/api/register', {
+    const response = await fetch('http://localhost:8080/api/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -26,6 +28,13 @@ const Register = () => {
         password
       })
     })
+    const content = await response.json()
+    if (content.id === 0) {
+      setName('')
+      setEmail('')
+      setPassword('')
+      return setDisclaimer('user already registered')
+    }
     setToLogin(true)
   }
   
@@ -44,6 +53,7 @@ const Register = () => {
         name="email"
         autoComplete="email"
         autoFocus
+        value={email}
         onChange={e => setEmail(e.target.value)}
       />
       <TextField
@@ -55,6 +65,7 @@ const Register = () => {
         type="password"
         id="password"
         autoComplete="current-password"
+        value={password}
         onChange={e => setPassword(e.target.value)}
       />
       <TextField
@@ -65,8 +76,10 @@ const Register = () => {
         label="Username"
         name="username"
         autoComplete="given-username"
+        value={name}
         onChange={e => setName(e.target.value)}
       />
+      <p>{ disclaimer }</p>
       <Button
         type="submit"
         fullWidth

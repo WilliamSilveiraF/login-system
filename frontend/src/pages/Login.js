@@ -5,6 +5,7 @@ import { useGlobalContext } from "../context";
 
 const Login = () => {
   const [toLogin, setToLogin] = useState(false)
+  const [disclaimer, setDisclaimer] = useState('')
   const { 
     email, setEmail,
     password, setPassword 
@@ -14,6 +15,7 @@ const Login = () => {
     setToLogin(false)
     setEmail('')
     setPassword('')
+    setDisclaimer('')
   }, [])
   
   const submit = async (e) => {
@@ -32,7 +34,7 @@ const Login = () => {
     if (content.message === "success") {
       setToLogin(true)
     } else {
-      window.alert(content.message)
+      setDisclaimer(content.message)
     }
   }
   if (toLogin) {
@@ -50,6 +52,7 @@ const Login = () => {
         name="email"
         autoComplete="email"
         autoFocus
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
@@ -60,6 +63,7 @@ const Login = () => {
         type="password"
         id="password"
         autoComplete="current-password"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button
@@ -71,6 +75,7 @@ const Login = () => {
       >
         Sign In
       </Button>
+      <h5>{ disclaimer }</h5>
       <h6>Don't have an account? <Link to="/register">Register</Link></h6>
     </form>
   );
