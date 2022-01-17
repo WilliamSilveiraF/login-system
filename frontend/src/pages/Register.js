@@ -1,36 +1,69 @@
 import React from "react";
 import { TextField, Button } from "@mui/material"
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useGlobalContext } from "../context";
 
 const Register = () => {
+  const { 
+    name, setName,
+    email, setEmail,
+    password, setPassword,
+    redirect, setRedirect
+  } = useGlobalContext()
+
+  const submit = async (e) => {
+    e.preventDefault()
+    
+    await fetch('http://localhost:8080/api/register', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name,
+        email,
+        password
+      })
+    })
+    setRedirect(true)
+  }
+
+  if (redirect) {
+    return <Navigate to="/"/>
+  }
+
   return (
-    <form id='registerForms'>
+    <form id='registerForms' onSubmit={submit}>
       <h1>Welcome to <span>willbook</span></h1>
       <TextField
         margin="normal"
         fullWidth
+        required
         id="email"
         label="Email Address"
         name="email"
         autoComplete="email"
         autoFocus
+        onChange={e => setEmail(e.target.value)}
       />
       <TextField
         margin="normal"
         fullWidth
+        required
         name="password"
         label="Password"
         type="password"
         id="password"
         autoComplete="current-password"
+        onChange={e => setPassword(e.target.value)}
       />
       <TextField
         margin="normal"
         fullWidth
+        required
         id="username"
         label="Username"
         name="username"
         autoComplete="given-username"
+        onChange={e => setName(e.target.value)}
       />
       <Button
         type="submit"
