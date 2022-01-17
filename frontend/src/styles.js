@@ -10,7 +10,7 @@ export const Main = styled.main`
   display: grid;
   justify-content: center;
   grid-template-rows: 1fr 3fr;
-  grid-template-colums: 320px;;
+  grid-template-colums: 320px 320px;
 
   & > *:first-child {
     text-align: center;
