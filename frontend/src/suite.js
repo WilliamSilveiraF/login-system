@@ -17,6 +17,9 @@ const suite = create((data = {}, currentField) => {
   test("password", "Password must be less than 15 digits", () => {
     enforce(data.password.length).lessThan(15)
   })
+  test("username", "Username is required", () => {
+    enforce(data.username).isNotEmpty()
+  })
 })
 
 export default suite;
