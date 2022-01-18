@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material"
 import { Link, Navigate } from "react-router-dom";
+import suite from '../suite'
 
 const Login = () => {
   const [toLogin, setToLogin] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [disclaimer, setDisclaimer] = useState('')
+  const [inputTest, setInputTest] = useState({ email: '', password: '' })
+  console.log(email, password)
+
+  function handleChange({ target: { name, value } }) {
+    if (name === "email") setEmail(value)
+    if (name === "password") setPassword(value)
+    suite({ email, password }, name)
+  }
+  console.log(suite.get().getErrors('password'))
   
   const submit = async (e) => {
     e.preventDefault()
@@ -26,6 +36,7 @@ const Login = () => {
   if (toLogin) {
     return <Navigate to="/home"/>
   }
+  
   return (
     <form id='loginForms' onSubmit={submit}>
       <h1>Hi :D</h1>
@@ -39,7 +50,9 @@ const Login = () => {
         autoComplete="email"
         autoFocus
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        helperText={ 'fixHere' }
+        error={ 'fixHere' }
+        onChange={handleChange}
       />
       <TextField
         margin="normal"
@@ -50,7 +63,9 @@ const Login = () => {
         id="password"
         autoComplete="current-password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        helperText={ 'fixHere' }
+        error={ 'fixHere' }
+        onChange={handleChange}
       />
       <Button
         id="signIn"
