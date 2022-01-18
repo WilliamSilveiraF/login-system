@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material"
 import { Link, Navigate } from "react-router-dom";
 import suite from '../suite'
@@ -8,18 +8,23 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [disclaimer, setDisclaimer] = useState('')
-  const [inputTest, setInputTest] = useState({ email: '', password: '' })
+  const [inputError, setInputError] = useState({ email: '', password: '' })
   console.log(email, password)
-
+  console.log(inputError)
   function handleChange({ target: { name, value } }) {
     if (name === "email") setEmail(value)
     if (name === "password") setPassword(value)
-    suite({ email, password }, name)
   }
-  console.log(suite.get().getErrors('password'))
-  
+  let res;
   const submit = async (e) => {
     e.preventDefault()
+    suite({ email, password }, "email")
+    suite({ email, password }, "password")
+    res = suite.get()
+    if (res.errorCount > 0) {
+      setInputError( { email: res.getErrors('email')[0], password: res.getErrors('password')[0] })
+      return
+    }    
 
     const response = await fetch('http://localhost:8080/api/login', {
       method: 'POST',
@@ -50,8 +55,8 @@ const Login = () => {
         autoComplete="email"
         autoFocus
         value={email}
-        helperText={ 'fixHere' }
-        error={ 'fixHere' }
+        helperText={ inputError.email }
+        error={ inputError.email }
         onChange={handleChange}
       />
       <TextField
@@ -63,8 +68,8 @@ const Login = () => {
         id="password"
         autoComplete="current-password"
         value={password}
-        helperText={ 'fixHere' }
-        error={ 'fixHere' }
+        helperText={ inputError.password }
+        error={ inputError.password }
         onChange={handleChange}
       />
       <Button
